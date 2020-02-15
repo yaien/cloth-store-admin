@@ -1,0 +1,21 @@
+{
+  "name": "cloth-store-admin",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@types/next": "^9.0.0",
+    "@types/react": "^16.9.19",
+    "next": "9.2.1",
+    "react": "16.12.0",
+    "react-dom": "16.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "^13.7.1",
+    "typescript": "^3.7.5"
+  }
+}
