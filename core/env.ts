@@ -7,5 +7,5 @@ export default {
     cookie: {
       name: process.env.AUTH_COOKIE_NAME || "jwt"
     }
-  }
+  },
 }

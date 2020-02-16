@@ -7,7 +7,7 @@ import { Credentials, Auth, Root } from "../interfaces"
 
 export default ({ config, http }: Root) => ({
   async login(credentials: Credentials) {
-    let res = await http.post<Auth>("/v1/auth/login", {
+    let res = await http.post<Auth>("/api/v1/auth/token", {
       grant_type: "password",
       username: credentials.email,
       password: credentials.password,

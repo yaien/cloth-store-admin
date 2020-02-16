@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { AxiosError } from "axios";
 
 
 
@@ -10,9 +11,8 @@ export default (next: NextHandler): NextHandler => {
       await next(req, res)
     } catch (error) {
       if(error.response) {
-        return res.status(error.response.status).send(error.response.body)
+        return res.status(error.response.status).send(error.response.data)
       }
-      console.error(error)
       return res.status(500).send({ error: error.message })
     }
   }
