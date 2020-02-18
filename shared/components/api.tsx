@@ -1,4 +1,4 @@
-import { createContext, FunctionComponent as FC, useEffect } from "react";
+import { createContext, FC, useEffect } from "react";
 import useSession from "../hooks/useSession";
 
 
