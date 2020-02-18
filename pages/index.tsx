@@ -1,11 +1,12 @@
 import React from 'react'
-import Nav from '../shared/components/nav'
+import Dash from '../shared/components/dash'
 import Head from '../shared/components/head'
 
 const Home = () => (
-  <div>
-    <Head></Head>
-  </div>
+  <Dash>
+    <Head title="Dashboard" />
+    Stats
+  </Dash>
 )
 
 export default Home

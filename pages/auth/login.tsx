@@ -10,10 +10,17 @@ const Login: FC = () => {
   const router = useRouter()
   const form = useForm<Credentials>()
 
+  function next(): string {
+    let value = router.query.next
+    if(!value) return ""
+    if (typeof value == "string") return value
+    return value[0] 
+  }
+
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
     await api.session.login(form.data)
-    await router.push("/")
+    await router.push(next() || "/")
   }
 
   return (

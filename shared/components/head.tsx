@@ -1,6 +1,6 @@
 import NextHead from "next/head"
 import settings from "../../core/settings"
-import { FunctionComponent as FC } from "react"
+import { FC } from "react"
 
 export interface HeadProps {
   title?: string
