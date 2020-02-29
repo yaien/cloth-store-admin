@@ -12,7 +12,7 @@ function useItems() {
   }
 
   const create = async (item: Partial<Item>) => {
-    let res = await axios.post("/api/items")
+    let res = await axios.post("/api/items", item)
     return res.data
   }
 

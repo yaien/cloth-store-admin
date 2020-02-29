@@ -27,7 +27,7 @@ export const ItemSizes: FC<ItemSizesProps> = props => {
     }
   }, [sizes]);
 
-  const addSize = (size: Size) => {
+  const add = (size: Size) => {
     const exists = sizes.some(s => {
       return s.label.toLowerCase() == size.label.toLocaleLowerCase();
     });
@@ -36,19 +36,29 @@ export const ItemSizes: FC<ItemSizesProps> = props => {
     addModal.toggle();
   };
 
+  const remove = (size: Size) => {
+    let nextSizes = sizes.filter(s => s.label != size.label);
+    setSizes(nextSizes);
+  };
+
   return (
     <Card>
       <CardHeader className="d-flex justify-content-between align-items-center">
         Tallas
-        <Button size="sm" color="primary" onClick={addModal.toggle}>
+        <Button
+          type="button"
+          size="sm"
+          color="primary"
+          onClick={addModal.toggle}
+        >
           Agregar
         </Button>
       </CardHeader>
-      <SizeTable sizes={sizes} />
+      <SizeTable sizes={sizes} onDelete={remove} />
       <Modal isOpen={addModal.isOpen} toggle={addModal.toggle}>
         <ModalHeader toggle={addModal.toggle}>Agregar Talla</ModalHeader>
         <ModalBody>
-          <SizeForm onSubmit={addSize}></SizeForm>
+          <SizeForm onSubmit={add} />
         </ModalBody>
       </Modal>
     </Card>

@@ -37,6 +37,7 @@ export const ItemForm: FC<ItemFormProps> = props => {
           <Input
             type="number"
             name="price"
+            min="0"
             required
             onChange={form.input("price", Number)}
           />
@@ -46,7 +47,6 @@ export const ItemForm: FC<ItemFormProps> = props => {
           <Input
             type="textarea"
             name="description"
-            required
             onChange={form.input("description")}
           />
         </FormGroup>

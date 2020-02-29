@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, FormEvent } from "react";
 import Dash from "../../shared/components/dash";
 import Head from "../../shared/components/head";
 import {
@@ -15,13 +15,28 @@ import { Item, Size } from "../../lib/store";
 
 import ItemForm from "../../shared/components/item-form";
 import ItemSizes from "../../shared/components/item-sizes";
+import { useAPI } from "../../shared/hooks";
+import { useRouter } from "next/router";
 
 const Create: FC = () => {
+  const api = useAPI();
+  const router = useRouter();
   const [item, setItem] = useState<Item>();
 
   const onChange = (change: Item) => setItem({ ...item, ...change });
 
   const onChangeSizes = (sizes: Size[]) => setItem({ ...item, sizes });
+
+  const onSubmit = async (e: FormEvent) => {
+    try {
+      e.preventDefault();
+      e.stopPropagation();
+      await api.items.create(item);
+      await router.push("/items");
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <Dash>
@@ -30,7 +45,7 @@ const Create: FC = () => {
         <Card>
           <CardHeader>Agregar Item</CardHeader>
           <CardBody>
-            <Form>
+            <Form onSubmit={onSubmit}>
               <Row>
                 <Col md={6}>
                   <ItemForm item={item} onChange={onChange} />

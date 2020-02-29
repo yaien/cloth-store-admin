@@ -20,6 +20,7 @@ export const SizeForm: FC<SizeFormProps> = props => {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    e.stopPropagation();
     if (props.onSubmit) {
       props.onSubmit(form.data);
     }

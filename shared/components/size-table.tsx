@@ -4,9 +4,10 @@ import { FC } from "react";
 
 export interface SizeTableProps {
   sizes: Size[];
+  onDelete?(size: Size): void;
 }
 
-export const SizeTable: FC<SizeTableProps> = ({ sizes }) => {
+export const SizeTable: FC<SizeTableProps> = ({ sizes, onDelete }) => {
   return (
     <Table className="text-center" size="sm">
       <thead>
@@ -23,7 +24,11 @@ export const SizeTable: FC<SizeTableProps> = ({ sizes }) => {
             <td>{size.existence}</td>
             <td>
               <ButtonGroup>
-                <Button size="sm" color="danger">
+                <Button
+                  size="sm"
+                  color="danger"
+                  onClick={onDelete?.bind(null, size)}
+                >
                   <i className="fa fa-close"></i>
                 </Button>
               </ButtonGroup>
@@ -35,4 +40,4 @@ export const SizeTable: FC<SizeTableProps> = ({ sizes }) => {
   );
 };
 
-export default SizeTable
+export default SizeTable;
