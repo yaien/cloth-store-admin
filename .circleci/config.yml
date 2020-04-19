@@ -1,0 +1,31 @@
+# Golang CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-go/ for more details
+version: 2
+
+jobs:
+  deploy:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Install Heroku CLI
+          command: curl https://cli-assets.heroku.com/install.sh | sh
+      - run:
+          name: Heroku login
+          command: heroku container:login
+      - run:
+          name: Push container
+          command: heroku container:push web --app ${HEROKU_APP}
+      - run:
+          name: Release container
+          command: heroku container:release web --app ${HEROKU_APP}
+
+workflows:
+  version: 2
+  workflow:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only: develop
