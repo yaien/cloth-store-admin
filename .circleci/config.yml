@@ -20,3 +20,9 @@ jobs:
       - run:
           name: Release container
           command: heroku container:release web --app ${HEROKU_APP}
+
+workflows:
+  version: 2
+  workflow:
+    jobs:
+      - deploy
