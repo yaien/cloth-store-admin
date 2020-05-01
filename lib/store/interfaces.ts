@@ -1,11 +1,10 @@
-import { AxiosInstance } from "axios";
+import { AxiosInstance } from "axios"
 import session from "./session"
 
 export interface Root {
   config: Config
   http: AxiosInstance
 }
-
 
 export interface Config {
   baseUrl: string
@@ -30,14 +29,18 @@ export interface User {
   role: "admin"
 }
 
+export interface Picture {
+  reference: string
+}
+
 export interface Item {
   name: string
   price: number
   slug: string
-  active: boolean,
+  active: boolean
   sizes: Size[]
   tags?: string[]
-  pictures?: string[]
+  pictures?: Picture[]
   description: string
   createdAt: number
 }
@@ -45,6 +48,11 @@ export interface Item {
 export interface Size {
   label: string
   existence: number
+}
+
+export interface Cloudinary {
+  cloud: string
+  preset: string
 }
 
 export type Session = ReturnType<typeof session>
