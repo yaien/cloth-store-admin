@@ -1,29 +1,33 @@
-import { FC } from "react"
-import { Picture } from "../../lib/store"
+import { FC } from "react";
+import { Picture } from "../../lib/store";
+import { useAPI } from "../hooks";
 
 export interface ImageInputProps {
-  onAdded?(picture: Picture): void
+  onAdded?(picture: Picture): void;
 }
 
 export const ImageInput: FC<ImageInputProps> = (props) => {
-  function open() {
-    const cloudinary: any = window["cloudinary"]
-    const config = {
-      cloudName: "dic03uy4n",
-      uploadPreset: "wev39m4e",
-      sources: ["local"],
-    }
+  const api = useAPI();
+
+  async function open() {
+    const cloudinary: any = window["cloudinary"];
+    const settings = api.settings.cloudinary;
+    if (!settings) return null;
     const widget: any = cloudinary.createUploadWidget(
-      config,
+      {
+        cloudName: settings.cloud,
+        uploadPreset: settings.preset,
+        sources: ["local"],
+      },
       (err: Error, result: any) => {
         if (result && result.event == "success" && props.onAdded) {
-          console.log(result)
-          props.onAdded({ reference: result.info.public_id })
+          console.log(result);
+          props.onAdded({ reference: result.info.public_id });
         }
       }
-    )
+    );
 
-    widget.open()
+    widget.open();
   }
 
   return (
@@ -32,7 +36,7 @@ export const ImageInput: FC<ImageInputProps> = (props) => {
         Upload
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default ImageInput
+export default ImageInput;

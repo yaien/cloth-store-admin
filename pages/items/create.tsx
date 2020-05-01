@@ -3,11 +3,11 @@ import Head from "../../shared/components/head"
 import ItemForm from "../../shared/components/item-form"
 import ItemSizes from "../../shared/components/item-sizes"
 import ImageInput from "../../shared/components/image-input"
-import { FC, useState, FormEvent } from "react"
+import { FC, useState, FormEvent, useMemo, useEffect } from "react"
 import { useAPI } from "../../shared/hooks"
 import { useRouter } from "next/router"
-import { Item, Size, Picture } from "../../lib/store"
-import { Image } from "cloudinary-react"
+import { Item, Size, Picture, Cloudinary } from "../../lib/store"
+import { Image, CloudinaryContext } from "cloudinary-react"
 import {
   Container,
   Card,
@@ -18,6 +18,7 @@ import {
   Col,
   Button,
 } from "reactstrap"
+import ImageList from "../../shared/components/image-list"
 
 const Create: FC = () => {
   const api = useAPI()
@@ -63,27 +64,10 @@ const Create: FC = () => {
                 </Col>
               </Row>
               <Row>
-                <Col md={12}>
-                  <Row>
-                    {item.pictures &&
-                      item.pictures.map((picture) => (
-                        <Col md={6} key={picture.reference}>
-                          <Image
-                            cloudName="dic03uy4n"
-                            publicId={picture.reference}
-                            responsive
-                            width="200"
-                          />
-                        </Col>
-                      ))}
-                  </Row>
-                </Col>
-                <Row>
-                  <Col md={12} className="text-center">
-                    <ImageInput onAdded={onPictureAdded} />
-                  </Col>
-                </Row>
+                {item.pictures && <ImageList pictures={item.pictures} />}
+                <ImageInput onAdded={onPictureAdded} />
               </Row>
+
               <Button type="submit" color="primary" block className="mt-3">
                 Agregar
               </Button>

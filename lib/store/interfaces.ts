@@ -50,4 +50,9 @@ export interface Size {
   existence: number
 }
 
+export interface Cloudinary {
+  cloud: string
+  preset: string
+}
+
 export type Session = ReturnType<typeof session>
