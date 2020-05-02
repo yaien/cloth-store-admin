@@ -7,8 +7,11 @@ import {
   CardText,
   CardSubtitle,
   CardImg,
+  CardFooter,
+  Button,
 } from "reactstrap";
 import ImageCarousel from "./image-carousel";
+import Link from "next/link";
 
 export interface ItemProps {
   item: Item;
@@ -37,6 +40,13 @@ export const ItemCard: FC<ItemProps> = ({ item }) => {
         <CardSubtitle>${item.price.toLocaleString()}</CardSubtitle>
         <CardText>{item.description}</CardText>
       </CardBody>
+      <CardFooter>
+        <Link href={"/items/" + item.id}>
+          <Button block color="primary">
+            EDITAR
+          </Button>
+        </Link>
+      </CardFooter>
     </Card>
   );
 };

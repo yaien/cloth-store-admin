@@ -1,22 +1,29 @@
-import { FC, useState, useEffect } from "react"
+import { FC, useState, useEffect } from "react";
 import { useAPI, useToggler } from "../../shared/hooks";
-import { Container, Card, CardHeader, Button, CardBody, Row, Col } from "reactstrap";
+import {
+  Container,
+  Card,
+  CardHeader,
+  Button,
+  CardBody,
+  Row,
+  Col,
+} from "reactstrap";
 import Dash from "../../shared/components/dash";
 import Head from "../../shared/components/head";
 import ItemCard from "../../shared/components/item-card";
-import Link from "next/link"
-
+import Link from "next/link";
 
 const Items: FC = () => {
-  const api = useAPI()
-  const addModal = useToggler()
-  const [loading, setLoading] = useState();
+  const api = useAPI();
+  const addModal = useToggler();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true)
-    api.items.fetch().then(() => setLoading(false))
-  }, [])
-  
+    setLoading(true);
+    api.items.fetch().then(() => setLoading(false));
+  }, []);
+
   return (
     <Dash>
       <Head title="Items" />
@@ -32,7 +39,7 @@ const Items: FC = () => {
           </CardHeader>
           <CardBody>
             <Row>
-              { api.items.data.map(item => (
+              {api.items.data.map((item) => (
                 <Col md={4} key={item.slug}>
                   <ItemCard item={item}></ItemCard>
                 </Col>
@@ -43,6 +50,6 @@ const Items: FC = () => {
       </Container>
     </Dash>
   );
-}
+};
 
-export default Items
+export default Items;

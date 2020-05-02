@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Picture } from "../../lib/store";
 import { useAPI } from "../hooks";
+import { Button } from "reactstrap";
 
 export interface ImageInputProps {
   onAdded?(picture: Picture): void;
@@ -32,9 +33,9 @@ export const ImageInput: FC<ImageInputProps> = (props) => {
 
   return (
     <div>
-      <button type="button" onClick={open}>
-        Upload
-      </button>
+      <Button type="button" block color="success" onClick={open}>
+        Subir Imagen
+      </Button>
     </div>
   );
 };

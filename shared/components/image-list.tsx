@@ -1,32 +1,37 @@
-import { Picture, Cloudinary } from "../../lib/store"
-import { FC, useState, useEffect } from "react"
-import { useAPI } from "../hooks"
-import { Image, CloudinaryContext } from "cloudinary-react"
+import { Picture } from "../../lib/store";
+import { FC } from "react";
+import { useAPI } from "../hooks";
+import { Cloudinary } from "cloudinary-core";
 
 export interface ImageListProps {
-  pictures: Picture[]
+  pictures: Picture[];
 }
 
 export const ImageList: FC<ImageListProps> = (props) => {
-  const api = useAPI()
-  const settings = api.settings.cloudinary
+  const api = useAPI();
+  const settings = api.settings.cloudinary;
 
   if (!settings) {
-    return null
+    return null;
   }
 
+  const cloudinary = new Cloudinary({ cloud_name: settings.cloud });
+
   return (
-    <CloudinaryContext cloudName={settings.cloud}>
+    <>
       {props.pictures.map((picture) => (
-        <Image
+        <img
           key={picture.reference}
-          publicId={picture.reference}
-          width="200"
-          responsive
+          className="img-fluid rounded border shadow-sm m-2"
+          src={cloudinary.url(picture.reference, {
+            crop: "scale",
+            width: 318,
+            height: 180,
+          })}
         />
       ))}
-    </CloudinaryContext>
-  )
-}
+    </>
+  );
+};
 
-export default ImageList
+export default ImageList;

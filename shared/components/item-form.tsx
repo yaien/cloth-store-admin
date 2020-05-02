@@ -1,58 +1,67 @@
-import React, { FC, useEffect } from "react";
+import { Item, Size, Picture } from "../../lib/store";
+import { FC, FormEvent, useState } from "react";
 import {
+  Form,
+  Row,
+  Col,
+  Button,
   CardBody,
+  CardFooter,
   Card,
-  Input,
-  FormGroup,
-  Label,
-  CardHeader
+  CardHeader,
 } from "reactstrap";
-import { useForm } from "../hooks";
-import { Item } from "../../lib/store";
+import ItemSizes from "./item-sizes";
+import ImageInput from "./image-input";
+import ImageList from "./image-list";
+import ItemBasic from "./item-basic";
+import ItemImages from "./item-images";
 
 export interface ItemFormProps {
   item?: Item;
-  onChange?(item: Item): void;
+  onSubmit?(item: Item): void;
 }
 
-export const ItemForm: FC<ItemFormProps> = props => {
-  const form = useForm<Item>(props.item);
+export const ItemForm: FC<ItemFormProps> = (props) => {
+  const [item, setItem] = useState<Item>(props.item || ({} as Item));
 
-  useEffect(() => {
-    if (props.onChange) {
-      props.onChange(form.data);
+  const onChange = (change: Item) => setItem({ ...item, ...change });
+
+  const onChangeSizes = (sizes: Size[]) => setItem({ ...item, sizes });
+
+  const onPictureAdded = (picture: Picture) => {
+    setItem((item) => {
+      const pictures = item.pictures ? [...item.pictures, picture] : [picture];
+      return { ...item, pictures };
+    });
+  };
+
+  const onSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (props.onSubmit) {
+      props.onSubmit(item);
     }
-  }, [form.data]);
+  };
 
   return (
-    <Card>
-      <CardHeader>Información Basica</CardHeader>
-      <CardBody>
-        <FormGroup>
-          <Label>Nombre</Label>
-          <Input name="name" required onChange={form.input("name")} />
-        </FormGroup>
-        <FormGroup>
-          <Label>Precio</Label>
-          <Input
-            type="number"
-            name="price"
-            min="0"
-            required
-            onChange={form.input("price", Number)}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label>Descripción</Label>
-          <Input
-            type="textarea"
-            name="description"
-            onChange={form.input("description")}
-          />
-        </FormGroup>
-      </CardBody>
-    </Card>
+    <Form onSubmit={onSubmit}>
+      <Row>
+        <Col md={6}>
+          <ItemBasic item={item} onChange={onChange} />
+        </Col>
+        <Col md={6}>
+          <ItemSizes sizes={item?.sizes} onChange={onChangeSizes} />
+        </Col>
+      </Row>
+      <Row className="mt-3">
+        <Col sm={12}>
+          <ItemImages pictures={item.pictures} onAdded={onPictureAdded} />
+        </Col>
+      </Row>
+
+      <Button type="submit" color="primary" block className="mt-3">
+        Guardar
+      </Button>
+    </Form>
   );
 };
-
-export default ItemForm;
