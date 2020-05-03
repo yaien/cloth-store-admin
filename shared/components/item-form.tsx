@@ -35,6 +35,17 @@ export const ItemForm: FC<ItemFormProps> = (props) => {
     });
   };
 
+  const onPositionChange = (pictures: Picture[]) => {
+    setItem({ ...item, pictures });
+  };
+
+  const onRemove = (picture: Picture) => {
+    const pictures = item.pictures.filter(
+      (p) => p.reference != picture.reference
+    );
+    setItem({ ...item, pictures });
+  };
+
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -55,7 +66,12 @@ export const ItemForm: FC<ItemFormProps> = (props) => {
       </Row>
       <Row className="mt-3">
         <Col sm={12}>
-          <ItemImages pictures={item.pictures} onAdded={onPictureAdded} />
+          <ItemImages
+            pictures={item.pictures}
+            onAdded={onPictureAdded}
+            onPositionChange={onPositionChange}
+            onRemove={onRemove}
+          />
         </Col>
       </Row>
 

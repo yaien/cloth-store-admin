@@ -7,9 +7,16 @@ import ImageList from "./image-list";
 export interface ItemPicturesProps {
   pictures?: Picture[];
   onAdded?(picture: Picture): void;
+  onPositionChange?(pictures: Picture[]): void;
+  onRemove?(picture: Picture, position: number): void;
 }
 
-export const ItemImages: FC<ItemPicturesProps> = ({ onAdded, pictures }) => {
+export const ItemImages: FC<ItemPicturesProps> = ({
+  onAdded,
+  pictures,
+  onPositionChange,
+  onRemove,
+}) => {
   return (
     <Card>
       <CardHeader className="d-flex justify-content-between">
@@ -19,9 +26,13 @@ export const ItemImages: FC<ItemPicturesProps> = ({ onAdded, pictures }) => {
         </div>
       </CardHeader>
       <CardBody>
-        <div className="d-flex justify-content-center">
-          {pictures && <ImageList pictures={pictures} />}
-        </div>
+        {pictures && pictures.length && (
+          <ImageList
+            pictures={pictures}
+            onPositionChange={onPositionChange}
+            onRemove={onRemove}
+          />
+        )}
       </CardBody>
     </Card>
   );
