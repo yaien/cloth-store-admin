@@ -42,7 +42,7 @@ export const ImageCarousel: FC<{ pictures: Picture[] }> = ({ pictures }) => {
   const slides = pictures.map((picture) => {
     const url = cloudinary.url(picture.reference, {
       width: 318,
-      height: 180,
+      height: 340,
       responsive: true,
       crop: "scale",
     });
@@ -52,13 +52,7 @@ export const ImageCarousel: FC<{ pictures: Picture[] }> = ({ pictures }) => {
         onExited={() => setAnimating(false)}
         key={picture.reference}
       >
-        <img
-          className="img-fluid"
-          height="180"
-          width="318"
-          src={url}
-          alt={picture.reference}
-        />
+        <img className="w-100" src={url} alt={picture.reference} />
       </CarouselItem>
     );
   });

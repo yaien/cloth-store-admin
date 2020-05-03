@@ -6,17 +6,16 @@ import {
   CardHeader,
   Button,
   CardBody,
-  Row,
-  Col,
+  CardDeck,
 } from "reactstrap";
 import Dash from "../../shared/components/dash";
 import Head from "../../shared/components/head";
 import ItemCard from "../../shared/components/item-card";
 import Link from "next/link";
+import Loader from "../../shared/components/loader";
 
 const Items: FC = () => {
   const api = useAPI();
-  const addModal = useToggler();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -38,13 +37,12 @@ const Items: FC = () => {
             </Link>
           </CardHeader>
           <CardBody>
-            <Row>
+            {loading && <Loader />}
+            <CardDeck>
               {api.items.data.map((item) => (
-                <Col md={4} key={item.slug}>
-                  <ItemCard item={item}></ItemCard>
-                </Col>
+                <ItemCard key={item.id} item={item}></ItemCard>
               ))}
-            </Row>
+            </CardDeck>
           </CardBody>
         </Card>
       </Container>

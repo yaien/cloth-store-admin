@@ -25,6 +25,7 @@ const Detail: FC = () => {
 
   const onSubmit = async (item: Item) => {
     await update(item);
+    router.push("/items");
   };
 
   if (!item) {
