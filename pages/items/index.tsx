@@ -1,5 +1,5 @@
 import { FC, useState, useEffect } from "react";
-import { useAPI, useToggler } from "../../shared/hooks";
+import { useAPI } from "../../shared/hooks";
 import {
   Container,
   Card,
