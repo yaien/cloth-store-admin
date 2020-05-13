@@ -5,7 +5,7 @@ import {
   InputGroupAddon,
   InputGroupText,
   Input,
-  Button
+  Button,
 } from "reactstrap";
 import { useForm } from "../hooks";
 import { Size } from "../../lib/store";
@@ -15,7 +15,7 @@ export interface SizeFormProps {
   onSubmit?(size: Size): void;
 }
 
-export const SizeForm: FC<SizeFormProps> = props => {
+export const SizeForm: FC<SizeFormProps> = (props) => {
   const form = useForm<Size>(props.size);
 
   const onSubmit = (e: React.FormEvent) => {
@@ -60,7 +60,7 @@ export const SizeForm: FC<SizeFormProps> = props => {
         color="primary"
         className="m-auto d-block"
       >
-        Agregar
+        Guardar
       </Button>
     </Form>
   );

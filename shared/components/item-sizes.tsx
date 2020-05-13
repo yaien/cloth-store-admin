@@ -5,7 +5,7 @@ import {
   Button,
   Modal,
   ModalHeader,
-  ModalBody
+  ModalBody,
 } from "reactstrap";
 import SizeTable from "./size-table";
 import { Size } from "../../lib/store";
@@ -17,9 +17,10 @@ export interface ItemSizesProps {
   onChange?(sizes: Size[]): void;
 }
 
-export const ItemSizes: FC<ItemSizesProps> = props => {
+export const ItemSizes: FC<ItemSizesProps> = (props) => {
   const [sizes, setSizes] = useState<Size[]>(props.sizes ?? []);
-  const addModal = useToggler();
+  const [size, setSize] = useState<Size>();
+  const modal = useToggler();
 
   useEffect(() => {
     if (props.onChange) {
@@ -27,38 +28,46 @@ export const ItemSizes: FC<ItemSizesProps> = props => {
     }
   }, [sizes]);
 
-  const add = (size: Size) => {
-    const exists = sizes.some(s => {
-      return s.label.toLowerCase() == size.label.toLocaleLowerCase();
-    });
-    if (exists) return;
-    setSizes([...sizes, size]);
-    addModal.toggle();
+  const key = (size: Size) => size.label.toLowerCase();
+
+  const save = (size: Size) => {
+    const exists = sizes.some((s) => key(s) == key(size));
+    if (exists) {
+      setSizes(sizes.map((s) => (key(s) == key(size) ? size : s)));
+    } else {
+      setSizes([...sizes, size]);
+    }
+    modal.toggle();
   };
 
   const remove = (size: Size) => {
-    let nextSizes = sizes.filter(s => s.label != size.label);
+    let nextSizes = sizes.filter((s) => s.label != size.label);
     setSizes(nextSizes);
+  };
+
+  const create = () => {
+    setSize(null);
+    modal.toggle();
+  };
+
+  const edit = (size: Size) => {
+    setSize(size);
+    modal.toggle();
   };
 
   return (
     <Card>
       <CardHeader className="d-flex justify-content-between align-items-center">
         Tallas
-        <Button
-          type="button"
-          size="sm"
-          color="primary"
-          onClick={addModal.toggle}
-        >
+        <Button type="button" size="sm" color="primary" onClick={create}>
           Agregar
         </Button>
       </CardHeader>
-      <SizeTable sizes={sizes} onDelete={remove} />
-      <Modal isOpen={addModal.isOpen} toggle={addModal.toggle}>
-        <ModalHeader toggle={addModal.toggle}>Agregar Talla</ModalHeader>
+      <SizeTable sizes={sizes} onDelete={remove} onEdit={edit} />
+      <Modal isOpen={modal.isOpen} toggle={modal.toggle}>
+        <ModalHeader toggle={modal.toggle}>Guardar Talla</ModalHeader>
         <ModalBody>
-          <SizeForm onSubmit={add} />
+          <SizeForm onSubmit={save} size={size} />
         </ModalBody>
       </Modal>
     </Card>

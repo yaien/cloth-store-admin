@@ -7,6 +7,7 @@ import {
   Button,
   CardBody,
   CardDeck,
+  Col,
 } from "reactstrap";
 import Dash from "../../shared/components/dash";
 import Head from "../../shared/components/head";
@@ -26,7 +27,7 @@ const Items: FC = () => {
   return (
     <Dash>
       <Head title="Items" />
-      <Container className="mt-3">
+      <Container fluid className="mt-3">
         <Card>
           <CardHeader className="d-flex justify-content-between">
             Items
@@ -38,9 +39,11 @@ const Items: FC = () => {
           </CardHeader>
           <CardBody>
             {loading && <Loader />}
-            <CardDeck>
+            <CardDeck className="flex-wrap">
               {api.items.data.map((item) => (
-                <ItemCard key={item.id} item={item}></ItemCard>
+                <Col key={item.id} md={6} lg={4} className="mt-3">
+                  <ItemCard item={item}></ItemCard>
+                </Col>
               ))}
             </CardDeck>
           </CardBody>

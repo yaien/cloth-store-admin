@@ -6,7 +6,8 @@ import {
   Collapse,
   Nav,
   NavItem,
-  NavLink
+  NavLink,
+  Button,
 } from "reactstrap";
 import settings from "../../core/settings";
 import { useAPI } from "../hooks";
@@ -20,9 +21,9 @@ export const Navigation: FC = () => {
   const toggle = () => setIsOpen(!isOpen);
 
   const logout = async () => {
-    await api.session.logout()
-    router.push("/")
-  }
+    await api.session.logout();
+    router.push("/");
+  };
 
   return (
     <Navbar color="light" light expand="md">
@@ -47,7 +48,9 @@ export const Navigation: FC = () => {
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink className="pointer" onClick={logout}>Logout</NavLink>
+            <Button color="link" className="pointer" onClick={logout}>
+              Cerrar Sesión
+            </Button>
           </NavItem>
         </Nav>
       </Collapse>

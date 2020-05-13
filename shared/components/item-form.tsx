@@ -1,5 +1,5 @@
 import { Item, Size, Picture } from "../../lib/store";
-import { FC, FormEvent, useState } from "react";
+import { FC, FormEvent, useState, useEffect } from "react";
 import {
   Form,
   Row,
@@ -19,6 +19,7 @@ import ItemImages from "./item-images";
 export interface ItemFormProps {
   item?: Item;
   onSubmit?(item: Item): void;
+  onChange?(item: Item): void;
 }
 
 export const ItemForm: FC<ItemFormProps> = (props) => {
@@ -53,6 +54,12 @@ export const ItemForm: FC<ItemFormProps> = (props) => {
       props.onSubmit(item);
     }
   };
+
+  useEffect(() => {
+    if (props.onChange) {
+      props.onChange(item);
+    }
+  }, [item]);
 
   return (
     <Form onSubmit={onSubmit}>

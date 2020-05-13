@@ -4,8 +4,9 @@ import { useRouter } from "next/router";
 import { useAPI } from "../../shared/hooks";
 import { Item } from "../../lib/store";
 import { withDash } from "../../shared/components/dash";
-import { Container, Card, CardHeader, CardBody } from "reactstrap";
+import { Container, Card, CardHeader, CardBody, Button } from "reactstrap";
 import { ItemForm } from "../../shared/components/item-form";
+import PublishButton from "../../shared/components/publish-button";
 
 const Detail: FC = () => {
   const router = useRouter();
@@ -19,13 +20,25 @@ const Detail: FC = () => {
     // .catch(() => router.replace("/"));
   }, [router.query]);
 
-  const update = async (item: Item) => {
+  const onSubmit = async (item: Item) => {
     await api.items.update(item.id, item);
+    router.push("/items");
   };
 
-  const onSubmit = async (item: Item) => {
-    await update(item);
-    router.push("/items");
+  const onChange = async (changedItem: Item) => {
+    await api.items.update(item.id, changedItem);
+  };
+
+  const publish = async () => {
+    const update = { ...item, active: true } as Item;
+    const updated = await api.items.update(item.id, update);
+    setItem(updated);
+  };
+
+  const unpublish = async () => {
+    const update = { ...item, active: false } as Item;
+    const updated = await api.items.update(item.id, update);
+    setItem(updated);
   };
 
   if (!item) {
@@ -37,9 +50,20 @@ const Detail: FC = () => {
       <Head title={item.name} />
       <Container className="mt-5">
         <Card>
-          <CardHeader>Actualizar Item</CardHeader>
+          <CardHeader className="d-flex justify-content-between">
+            Actualizar Item
+            <PublishButton
+              item={item}
+              onUnpublish={unpublish}
+              onPublish={publish}
+            />
+          </CardHeader>
           <CardBody>
-            <ItemForm item={item} onSubmit={onSubmit}></ItemForm>
+            <ItemForm
+              item={item}
+              onSubmit={onSubmit}
+              onChange={onChange}
+            ></ItemForm>
           </CardBody>
         </Card>
       </Container>
