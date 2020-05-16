@@ -1,40 +1,39 @@
-import axios from "axios"
-import { Credentials, User } from "../../lib/store"
-import { useState } from "react"
-
+import axios from "axios";
+import { Credentials, User } from "chillhood";
+import { useState } from "react";
 
 export function useSession() {
-  const [user, setUser] = useState<User>()
-  const [ready, setReady] = useState(false)
+  const [user, setUser] = useState<User>();
+  const [ready, setReady] = useState(false);
 
   const login = async (credentials: Credentials) => {
-    let res = await axios.post("/api/auth/login", credentials)
-    setUser(res.data)
-  }
+    let res = await axios.post("/api/auth/login", credentials);
+    setUser(res.data);
+  };
 
   const logout = async () => {
-    await axios.post("/api/auth/logout")
-    setUser(undefined)
-  }
+    await axios.post("/api/auth/logout");
+    setUser(undefined);
+  };
 
   const init = async () => {
     try {
-      let res = await axios.get("/api/user")
-      setUser(res.data)
+      let res = await axios.get("/api/user");
+      setUser(res.data);
     } catch {
-      await logout()
+      await logout();
     } finally {
-      setReady(true)
+      setReady(true);
     }
-  }
+  };
 
   return {
     login,
     logout,
     init,
     user,
-    ready
-  }
+    ready,
+  };
 }
 
-export default useSession
+export default useSession;

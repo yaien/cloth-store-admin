@@ -8,7 +8,7 @@ import {
   CardHeader,
 } from "reactstrap";
 import { useForm } from "../hooks";
-import { Item } from "../../lib/store";
+import { Item } from "chillhood";
 
 export interface ItemBasicFormProps {
   item?: Item;

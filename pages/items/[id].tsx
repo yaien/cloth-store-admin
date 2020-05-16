@@ -2,7 +2,7 @@ import Head from "../../shared/components/head";
 import { FC, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAPI } from "../../shared/hooks";
-import { Item } from "../../lib/store";
+import { Item } from "chillhood";
 import { withDash } from "../../shared/components/dash";
 import { Container, Card, CardHeader, CardBody, Button } from "reactstrap";
 import { ItemForm } from "../../shared/components/item-form";

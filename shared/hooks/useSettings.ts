@@ -1,14 +1,14 @@
+import store from "../../core/store";
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { CloudinarySettings } from "../../lib/store";
+import { CloudinarySettings } from "chillhood";
 
 export function useSettings() {
   const [cloudinary, setCloudinary] = useState<CloudinarySettings>();
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    axios.get<CloudinarySettings>("/api/settings/cloudinary").then((res) => {
-      setCloudinary(res.data);
+    store.settings.cloudinary().then((data) => {
+      setCloudinary(data);
       setReady(true);
     });
   }, []);

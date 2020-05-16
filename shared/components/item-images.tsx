@@ -1,4 +1,4 @@
-import { Picture } from "../../lib/store";
+import { Picture } from "chillhood";
 import { FC } from "react";
 import { Card, CardHeader, CardBody } from "reactstrap";
 import ImageInput from "./image-input";

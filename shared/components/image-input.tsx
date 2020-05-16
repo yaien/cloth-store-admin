@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Picture } from "../../lib/store";
+import { Picture } from "chillhood";
 import { useAPI } from "../hooks";
 import { Button } from "reactstrap";
 

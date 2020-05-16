@@ -1,4 +1,4 @@
-import { Item, Size, Picture } from "../../lib/store";
+import { Item, Size, Picture } from "chillhood";
 import { FC, FormEvent, useState, useEffect } from "react";
 import {
   Form,

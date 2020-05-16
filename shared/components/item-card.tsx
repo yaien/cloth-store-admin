@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Item, Picture } from "../../lib/store";
+import { Item, Picture } from "chillhood";
 import {
   Card,
   CardTitle,

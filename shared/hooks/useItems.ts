@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Item } from "../../lib/store";
+import { Item } from "chillhood";
 import axios from "axios";
 
 function useItems() {

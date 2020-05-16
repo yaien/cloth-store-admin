@@ -1,5 +1,5 @@
 import { Row, Table, ButtonGroup, Button } from "reactstrap";
-import { Size } from "../../lib/store";
+import { Size } from "chillhood";
 import { FC } from "react";
 
 export interface SizeTableProps {

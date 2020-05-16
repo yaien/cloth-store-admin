@@ -8,7 +8,7 @@ import {
   ModalBody,
 } from "reactstrap";
 import SizeTable from "./size-table";
-import { Size } from "../../lib/store";
+import { Size } from "chillhood";
 import { useToggler } from "../hooks";
 import { SizeForm } from "./size-form";
 

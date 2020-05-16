@@ -1,5 +1,5 @@
 import html5 from "react-dnd-html5-backend";
-import { Picture } from "../../lib/store";
+import { Picture } from "chillhood";
 import { FC } from "react";
 import { useAPI } from "../hooks";
 import { Cloudinary } from "cloudinary-core";

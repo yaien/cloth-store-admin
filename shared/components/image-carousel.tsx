@@ -7,7 +7,7 @@ import {
 import { Cloudinary } from "cloudinary-core";
 import { useState, FC } from "react";
 import { useAPI } from "../hooks";
-import { Picture } from "../../lib/store";
+import { Picture } from "chillhood";
 
 export const ImageCarousel: FC<{ pictures: Picture[] }> = ({ pictures }) => {
   const [activeIndex, setActiveIndex] = useState(0);

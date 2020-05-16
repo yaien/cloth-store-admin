@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Item } from "../../lib/store";
+import { Item } from "chillhood";
 import { Button } from "reactstrap";
 
 export interface PublishButtonProps {

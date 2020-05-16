@@ -3,7 +3,7 @@ import { withDash } from "../../shared/components/dash";
 import { FC } from "react";
 import { useAPI } from "../../shared/hooks";
 import { useRouter } from "next/router";
-import { Item } from "../../lib/store";
+import { Item } from "chillhood";
 import { ItemForm } from "../../shared/components/item-form";
 import { Container, Card, CardBody, CardHeader } from "reactstrap";
 

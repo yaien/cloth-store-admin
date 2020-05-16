@@ -8,7 +8,7 @@ import {
   Button,
 } from "reactstrap";
 import { useForm } from "../hooks";
-import { Size } from "../../lib/store";
+import { Size } from "chillhood";
 
 export interface SizeFormProps {
   size?: Size;
