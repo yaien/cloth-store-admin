@@ -1,4 +1,4 @@
-import store from "../lib/store"
-import env from "./env"
+import chillhood from "chillhood";
+import env from "./env";
 
-export default store(env.store)
+export default chillhood(env.store);
