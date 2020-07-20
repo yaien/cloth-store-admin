@@ -37,7 +37,7 @@ export const Navigation: FC = () => {
             <NavLink href="/items">Items</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/orders">Orders</NavLink>
+            <NavLink href="/invoices">Facturas</NavLink>
           </NavItem>
         </Nav>
         <Nav>

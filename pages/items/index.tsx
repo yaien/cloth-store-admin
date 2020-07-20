@@ -27,7 +27,7 @@ const Items: FC = () => {
   return (
     <Dash>
       <Head title="Items" />
-      <Container fluid className="mt-3">
+      <Container className="mt-3">
         <Card>
           <CardHeader className="d-flex justify-content-between">
             Items
