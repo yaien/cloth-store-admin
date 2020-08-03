@@ -1,9 +1,8 @@
-import { FindParams } from "chillhood/dist/session/invoices";
 import axios from "axios";
-import { Invoice } from "chillhood";
+import { Invoice, InvoiceFindParams, Transport } from "chillhood";
 
 export function useInvoices() {
-  async function find(params: FindParams) {
+  async function find(params: InvoiceFindParams) {
     const res = await axios.get<Invoice[]>("/api/invoices", { params });
     return res.data;
   }
@@ -14,7 +13,8 @@ export function useInvoices() {
   }
 
   async function setTransport(id: string, transport: Transport) {
-    const res = await axios.patch<Invoice>(`/api/invoices/${id}/transport`);
+    const url = `/api/invoices/${id}/transport`;
+    const res = await axios.patch<Invoice>(url, transport);
     return res.data;
   }
 

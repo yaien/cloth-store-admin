@@ -4,7 +4,7 @@ import {
   useEffect,
   ChangeEvent,
 } from "react";
-import { useAPI } from "../../shared/hooks";
+import { useAPI, useToggler } from "../../shared/hooks";
 import Dash from "../../shared/components/dash";
 import Head from "../../shared/components/head";
 import {
@@ -19,9 +19,13 @@ import {
   Input,
   Spinner,
   InputGroupText,
+  Modal,
+  ModalHeader,
+  ModalBody,
 } from "reactstrap";
-import { InvoiceStatus, Invoice } from "chillhood";
+import { InvoiceStatus, Invoice, ShippingStatus, Transport } from "chillhood";
 import { InvoiceList } from "../../shared/components/invoice-list";
+import { TransportForm } from "../../shared/components/transport-form";
 
 const Invoices = () => {
   const api = useAPI();
@@ -29,6 +33,8 @@ const Invoices = () => {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState<string>();
   const [status, setStatus] = useState(InvoiceStatus.Accepted);
+  const [current, setCurrent] = useState<Invoice>();
+  const completion = useToggler();
 
   function onSearchChange(e: ChangeEvent<HTMLInputElement>) {
     setSearch(e.target.value);
@@ -36,6 +42,25 @@ const Invoices = () => {
 
   function onStatusChange(e: ChangeEvent<HTMLInputElement>) {
     setStatus(e.target.value as InvoiceStatus);
+  }
+
+  function onComplete(invoice: Invoice) {
+    setCurrent(invoice);
+    completion.toggle();
+  }
+
+  async function setTransport(transport: Transport) {
+    try {
+      if (!current) return;
+      const invoice = await api.invoices.setTransport(current.id, transport);
+      const newInvoices = invoices.map((inv) =>
+        inv.id == invoice.id ? invoice : inv
+      );
+      setInvoices(newInvoices);
+      completion.toggle();
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   useEffect(() => {
@@ -84,6 +109,7 @@ const Invoices = () => {
                     value={status || ""}
                     onChange={onStatusChange}
                   >
+                    <option value={InvoiceStatus.Completed}>Completadas</option>
                     <option value={InvoiceStatus.Accepted}>Aprobadas</option>
                     <option value={InvoiceStatus.Pending}>Pendientes</option>
                     <option value={InvoiceStatus.Rejected}>Rechazadas</option>
@@ -93,11 +119,25 @@ const Invoices = () => {
             </Row>
             <Row>
               <Col sm={12}>
-                <InvoiceList invoices={invoices} />
+                <InvoiceList invoices={invoices} onComplete={onComplete} />
               </Col>
             </Row>
           </CardBody>
         </Card>
+        <Modal isOpen={completion.isOpen} toggle={completion.toggle}>
+          <ModalHeader toggle={completion.toggle}>Actualizar Envio</ModalHeader>
+          <ModalBody>
+            {current && (
+              <TransportForm
+                onSubmit={setTransport}
+                transport={
+                  current.shipping.status == ShippingStatus.Sended &&
+                  current.shipping.transport
+                }
+              />
+            )}
+          </ModalBody>
+        </Modal>
       </Container>
     </Dash>
   );

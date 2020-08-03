@@ -1,34 +1,40 @@
 import { FC, useMemo } from "react";
-import { Invoice, InvoiceStatus, ShippingStatus } from "chillhood";
+import { Invoice, InvoiceStatus } from "chillhood";
 import {
   Card,
   CardHeader,
-  CardBody,
   Badge,
   ListGroup,
   ListGroupItem,
-  Table,
-  CardFooter,
   ButtonGroup,
   Button,
 } from "reactstrap";
-import items from "../../pages/api/items";
 
 export interface InvoiceCardProps {
   invoice: Invoice;
+  onComplete?(invoice: Invoice): void;
+  onShowCart?(invoice: Invoice): void;
+  onShowTransport?(invoice: Invoice): void;
 }
 
-export const InvoiceCard: FC<InvoiceCardProps> = ({ invoice }) => {
+export const InvoiceCard: FC<InvoiceCardProps> = ({
+  invoice,
+  onComplete,
+  onShowCart,
+  onShowTransport,
+}) => {
   const badge = useMemo(() => {
     switch (invoice.status) {
       case InvoiceStatus.Accepted:
         return { text: "aprobada", color: "success" };
       case InvoiceStatus.Pending:
-        return { text: "pendiente", color: "primary" };
+        return { text: "pendiente", color: "secondary" };
       case InvoiceStatus.Rejected:
         return { text: "rechazada", color: "danger" };
       case InvoiceStatus.Created:
         return { text: "creada", color: "warning" };
+      case InvoiceStatus.Completed:
+        return { text: "completada", color: "primary" };
     }
   }, [invoice.status]);
 
@@ -37,15 +43,21 @@ export const InvoiceCard: FC<InvoiceCardProps> = ({ invoice }) => {
       <CardHeader className="d-flex justify-content-between align-items-center flex-wrap p-1">
         Ref. {invoice.ref}
         <ButtonGroup size="sm">
-          <Button color="success">
-            <i className="fas fa-tshirt"></i>
-          </Button>
-          <Button color="primary">
-            <i className="fas fa-truck"></i>
-          </Button>
-          <Button color="success">
-            <i className="fas fa-shipping-fast"></i>
-          </Button>
+          {onShowCart && (
+            <Button color="success">
+              <i className="fas fa-tshirt"></i>
+            </Button>
+          )}
+          {invoice.status == InvoiceStatus.Accepted && onComplete && (
+            <Button color="primary" onClick={() => onComplete(invoice)}>
+              <i className="fas fa-truck"></i>
+            </Button>
+          )}
+          {invoice.status == InvoiceStatus.Completed && onShowTransport && (
+            <Button color="success" onClick={() => onShowCart(invoice)}>
+              <i className="fas fa-shipping-fast"></i>
+            </Button>
+          )}
         </ButtonGroup>
       </CardHeader>
       <ListGroup flush>

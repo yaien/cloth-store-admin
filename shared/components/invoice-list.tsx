@@ -5,6 +5,9 @@ import { InvoiceCard } from "./invoice-card";
 
 export interface InvoiceListProps {
   invoices: Invoice[];
+  onComplete?(invoice: Invoice): void;
+  onShowCart?(invoice: Invoice): void;
+  onShowTransport?(invoice: Invoice): void;
 }
 
 export const InvoiceList: FC<InvoiceListProps> = (props) => {
@@ -12,7 +15,12 @@ export const InvoiceList: FC<InvoiceListProps> = (props) => {
     <Row>
       {props.invoices.map((invoice) => (
         <Col key={invoice.id} md={6} className="mb-3">
-          <InvoiceCard invoice={invoice} />
+          <InvoiceCard
+            invoice={invoice}
+            onComplete={props.onComplete}
+            onShowCart={props.onShowCart}
+            onShowTransport={props.onShowTransport}
+          />
         </Col>
       ))}
     </Row>
