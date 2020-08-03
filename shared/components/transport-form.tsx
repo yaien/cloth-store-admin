@@ -33,7 +33,7 @@ export const TransportForm: FC<TransportFormProps> = (props) => {
         />
       </FormGroup>
       <FormGroup>
-        <Label>Numero de guia</Label>
+        <Label>Numero de guía</Label>
         <Input
           name="guide"
           required
