@@ -6,6 +6,7 @@ import { useForm } from "../hooks";
 export interface TransportFormProps {
   transport?: Transport;
   onSubmit?(transport: Transport): void;
+  disabled?: boolean;
 }
 
 export const TransportForm: FC<TransportFormProps> = (props) => {
@@ -21,13 +22,14 @@ export const TransportForm: FC<TransportFormProps> = (props) => {
   return (
     <Form onSubmit={onSubmit}>
       <FormGroup>
-        <Label>Provedor</Label>
+        <Label>Proveedor</Label>
         <Input
           name="provider"
           required
           onChange={form.input("provider", (v: string) => v.toUpperCase())}
           value={form.get("provider")}
           placeholder="Ej: SERVIENTREGA, COORDINADORA, etc"
+          disabled={props.disabled}
         />
       </FormGroup>
       <FormGroup>
@@ -37,11 +39,14 @@ export const TransportForm: FC<TransportFormProps> = (props) => {
           required
           onChange={form.input("guide")}
           value={form.get("guide")}
+          disabled={props.disabled}
         />
       </FormGroup>
-      <Button color="primary" type="submit" block>
-        ACTUALIZAR
-      </Button>
+      {!props.disabled && (
+        <Button color="primary" type="submit" block>
+          ACTUALIZAR
+        </Button>
+      )}
     </Form>
   );
 };

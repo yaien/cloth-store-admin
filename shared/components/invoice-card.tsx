@@ -54,7 +54,7 @@ export const InvoiceCard: FC<InvoiceCardProps> = ({
             </Button>
           )}
           {invoice.status == InvoiceStatus.Completed && onShowTransport && (
-            <Button color="success" onClick={() => onShowCart(invoice)}>
+            <Button color="success" onClick={() => onShowTransport(invoice)}>
               <i className="fas fa-shipping-fast"></i>
             </Button>
           )}

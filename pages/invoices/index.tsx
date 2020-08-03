@@ -35,6 +35,7 @@ const Invoices = () => {
   const [status, setStatus] = useState(InvoiceStatus.Accepted);
   const [current, setCurrent] = useState<Invoice>();
   const completion = useToggler();
+  const transport = useToggler();
 
   function onSearchChange(e: ChangeEvent<HTMLInputElement>) {
     setSearch(e.target.value);
@@ -61,6 +62,11 @@ const Invoices = () => {
     } catch (err) {
       console.error(err);
     }
+  }
+
+  function onShowTransport(invoice: Invoice) {
+    setCurrent(invoice);
+    transport.toggle();
   }
 
   useEffect(() => {
@@ -119,22 +125,28 @@ const Invoices = () => {
             </Row>
             <Row>
               <Col sm={12}>
-                <InvoiceList invoices={invoices} onComplete={onComplete} />
+                <InvoiceList
+                  invoices={invoices}
+                  onComplete={onComplete}
+                  onShowTransport={onShowTransport}
+                />
               </Col>
             </Row>
           </CardBody>
         </Card>
         <Modal isOpen={completion.isOpen} toggle={completion.toggle}>
-          <ModalHeader toggle={completion.toggle}>Actualizar Envio</ModalHeader>
+          <ModalHeader toggle={completion.toggle}>Actualizar envio</ModalHeader>
           <ModalBody>
-            {current && (
-              <TransportForm
-                onSubmit={setTransport}
-                transport={
-                  current.shipping.status == ShippingStatus.Sended &&
-                  current.shipping.transport
-                }
-              />
+            <TransportForm onSubmit={setTransport} />
+          </ModalBody>
+        </Modal>
+        <Modal isOpen={transport.isOpen} toggle={transport.toggle}>
+          <ModalHeader toggle={transport.toggle}>
+            Ver información de envio
+          </ModalHeader>
+          <ModalBody>
+            {current && current.shipping.status == ShippingStatus.Sended && (
+              <TransportForm transport={current.shipping.transport} disabled />
             )}
           </ModalBody>
         </Modal>
