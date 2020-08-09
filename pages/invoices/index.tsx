@@ -26,6 +26,7 @@ import {
 import { InvoiceStatus, Invoice, ShippingStatus, Transport } from "chillhood";
 import { InvoiceList } from "../../shared/components/invoice-list";
 import { TransportForm } from "../../shared/components/transport-form";
+import CartDetail from "../../shared/components/cart-detail";
 
 const Invoices = () => {
   const api = useAPI();
@@ -36,6 +37,7 @@ const Invoices = () => {
   const [current, setCurrent] = useState<Invoice>();
   const completion = useToggler();
   const transport = useToggler();
+  const cart = useToggler();
 
   function onSearchChange(e: ChangeEvent<HTMLInputElement>) {
     setSearch(e.target.value);
@@ -67,6 +69,11 @@ const Invoices = () => {
   function onShowTransport(invoice: Invoice) {
     setCurrent(invoice);
     transport.toggle();
+  }
+
+  function onShowCart(invoice: Invoice) {
+    setCurrent(invoice);
+    cart.toggle();
   }
 
   useEffect(() => {
@@ -129,6 +136,7 @@ const Invoices = () => {
                   invoices={invoices}
                   onComplete={onComplete}
                   onShowTransport={onShowTransport}
+                  onShowCart={onShowCart}
                 />
               </Col>
             </Row>
@@ -149,6 +157,10 @@ const Invoices = () => {
               <TransportForm transport={current.shipping.transport} disabled />
             )}
           </ModalBody>
+        </Modal>
+        <Modal isOpen={cart.isOpen} toggle={cart.toggle}>
+          <ModalHeader toggle={cart.toggle}>Ver detalles de compra</ModalHeader>
+          <ModalBody>{current && <CartDetail cart={current.cart} />}</ModalBody>
         </Modal>
       </Container>
     </Dash>

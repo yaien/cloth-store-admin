@@ -44,7 +44,7 @@ export const InvoiceCard: FC<InvoiceCardProps> = ({
         Ref. {invoice.ref}
         <ButtonGroup size="sm">
           {onShowCart && (
-            <Button color="success">
+            <Button color="success" onClick={() => onShowCart(invoice)}>
               <i className="fas fa-tshirt"></i>
             </Button>
           )}
