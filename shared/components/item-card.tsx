@@ -9,6 +9,7 @@ import {
   CardImg,
   CardFooter,
   Button,
+  Badge,
 } from "reactstrap";
 import ImageCarousel from "./image-carousel";
 import Link from "next/link";
@@ -36,8 +37,17 @@ export const ItemCard: FC<ItemProps> = ({ item }) => {
     <Card>
       <ItemCardImg pictures={item.pictures} />
       <CardBody>
-        <CardTitle>{item.name}</CardTitle>
-        <CardSubtitle>${item.price.toLocaleString()}</CardSubtitle>
+        <div className="d-flex justify-content-between align-items-center flex-wrap">
+          <h6 className="m-0">{item.name}</h6>
+          <div>
+            {item.active && (
+              <Badge className="mr-1" color="warning">
+                PUBLICADO
+              </Badge>
+            )}
+            <Badge color="success">${item.price.toLocaleString()}</Badge>
+          </div>
+        </div>
         <CardText>{item.description}</CardText>
       </CardBody>
       <CardFooter>

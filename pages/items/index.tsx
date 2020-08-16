@@ -8,6 +8,7 @@ import {
   CardBody,
   CardDeck,
   Col,
+  Row,
 } from "reactstrap";
 import Dash from "../../shared/components/dash";
 import Head from "../../shared/components/head";
@@ -27,27 +28,31 @@ const Items: FC = () => {
   return (
     <Dash>
       <Head title="Items" />
-      <Container className="mt-3">
-        <Card>
-          <CardHeader className="d-flex justify-content-between">
-            Items
-            <Link href="/items/create">
-              <Button size="sm" color="primary">
-                Agregar
-              </Button>
-            </Link>
-          </CardHeader>
-          <CardBody>
-            {loading && <Loader />}
-            <CardDeck className="flex-wrap">
-              {api.items.data.map((item) => (
-                <Col key={item.id} md={6} lg={4} className="mt-3">
-                  <ItemCard item={item}></ItemCard>
-                </Col>
-              ))}
-            </CardDeck>
-          </CardBody>
-        </Card>
+      <Container className="mt-3" fluid>
+        <Row>
+          <Col xl={{ size: 8, offset: 2 }}>
+            <Card>
+              <CardHeader className="d-flex justify-content-between">
+                Items
+                <Link href="/items/create">
+                  <Button size="sm" color="primary">
+                    Agregar
+                  </Button>
+                </Link>
+              </CardHeader>
+              <CardBody className="p-0">
+                {loading && <Loader />}
+                <CardDeck className="flex-wrap">
+                  {api.items.data.map((item) => (
+                    <Col key={item.id} md={6} lg={4} xl={3} className="mt-3">
+                      <ItemCard item={item}></ItemCard>
+                    </Col>
+                  ))}
+                </CardDeck>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
       </Container>
     </Dash>
   );

@@ -7,7 +7,7 @@ export const Dash: FC = (props) => {
   return (
     <Auth>
       <Navigation></Navigation>
-      <Container>{props.children}</Container>
+      <Container fluid>{props.children}</Container>
     </Auth>
   );
 };
