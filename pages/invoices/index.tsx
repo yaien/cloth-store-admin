@@ -27,9 +27,11 @@ import { InvoiceStatus, Invoice, ShippingStatus, Transport } from "chillhood";
 import { InvoiceList } from "../../shared/components/invoice-list";
 import { TransportForm } from "../../shared/components/transport-form";
 import CartDetail from "../../shared/components/cart-detail";
+import { useRouter } from "next/router";
 
 const Invoices = () => {
   const api = useAPI();
+  const router = useRouter();
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState<string>();
@@ -75,6 +77,13 @@ const Invoices = () => {
     setCurrent(invoice);
     cart.toggle();
   }
+
+  useEffect(() => {
+      if (router.query.search) {
+        let search = Array.isArray(router.query.search) ? router.query.search[0] : router.query.search
+        setSearch(search)
+      }
+  }, [router.query])
 
   useEffect(() => {
     setLoading(true);
