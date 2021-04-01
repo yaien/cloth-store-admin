@@ -15,6 +15,9 @@ export const SizeTable: FC<SizeTableProps> = ({ sizes, onDelete, onEdit }) => {
         <tr>
           <th>Talla</th>
           <th>Cantidad</th>
+          <th>Largo</th>
+          <th>Ancho</th>
+          <th>Mangas</th>
           <th>Acción</th>
         </tr>
       </thead>
@@ -23,6 +26,9 @@ export const SizeTable: FC<SizeTableProps> = ({ sizes, onDelete, onEdit }) => {
           <tr key={size.label}>
             <td>{size.label}</td>
             <td>{size.existence}</td>
+            <td>{size.body}(cm)</td>
+            <td>{size.chest}(cm)</td>
+            <td>{size.sleeve}(cm)</td>
             <td>
               <ButtonGroup size="sm">
                 <Button color="danger" onClick={onDelete?.bind(null, size)}>

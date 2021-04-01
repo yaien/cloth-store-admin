@@ -5,14 +5,8 @@ import {
   Row,
   Col,
   Button,
-  CardBody,
-  CardFooter,
-  Card,
-  CardHeader,
 } from "reactstrap";
 import ItemSizes from "./item-sizes";
-import ImageInput from "./image-input";
-import ImageList from "./image-list";
 import ItemBasic from "./item-basic";
 import ItemImages from "./item-images";
 

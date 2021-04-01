@@ -1,8 +1,8 @@
 import axios from "axios";
-import { Invoice, InvoiceFindParams, Transport } from "chillhood";
+import { Invoice, FindInvoiceOptions, Transport } from "chillhood";
 
 export function useInvoices() {
-  async function find(params: InvoiceFindParams) {
+  async function find(params: FindInvoiceOptions) {
     const res = await axios.get<Invoice[]>("/api/invoices", { params });
     return res.data;
   }

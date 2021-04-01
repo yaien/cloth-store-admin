@@ -16,12 +16,14 @@ const Detail: FC = () => {
   useEffect(() => {
     const id = router.query.id as string;
     if (!id) return;
-    api.items.get(id).then((data) => setItem(data));
-    // .catch(() => router.replace("/"));
+    api.items.get(id)
+      .then((data) => setItem(data))
+      .catch(() => router.replace("/"));
   }, [router.query]);
 
-  const onSubmit = async (item: Item) => {
-    await api.items.update(item.id, item);
+  const onSubmit = async (update: Item) => {
+    update.active = item.active
+    await api.items.update(update.id, update);
     router.push("/items");
   };
 
